@@ -1,19 +1,29 @@
 <?php
 
-require_once 'src/Conta.php';
-require_once 'src/Titular.php';
-require_once 'src/Cpf.php';
+require_once 'autoload.php';
 
-$guydo = new Titular(new Cpf('123.456.789-10'), 'Guydo Ventura');
-$primeiraConta = new Conta($guydo);
+use Alura\Banco\Modelo\Conta\{ContaCorrente, ContaPoupanca, Conta};
+use Alura\Banco\Modelo\Conta\Titular;
+use Alura\Banco\Modelo\Endereco;
+use Alura\Banco\Modelo\Cpf;
 
+
+
+$endereco = new Endereco('São Paulo', 'Aleatório', 'rua qualquer', '100');
+$fulano = new Titular(new Cpf('123.456.789-10'), 'Fulano da Silva', $endereco);
+$primeiraConta = new ContaCorrente($fulano);
 $primeiraConta->depositar(500);
 $primeiraConta->sacar(300);
 
-$fulano = new Titular(new Cpf('123.456.789-11'), 'Fulano da Silva');
-$segundaConta = new Conta($fulano);
 
-$sicrano = new Titular(new Cpf('123.456.789-12'), 'Sicrano Siqueira');
+$sicrana = new Titular(new Cpf('123.456.789-11'), 'Sicrana Siqueira', $endereco);
+$segundaConta = new ContaPoupanca($sicrana);
+
+
+
+$enderecobeltrano = new Endereco('Cidade1', 'Bairro1', 'rua um', '111');
+$beltrano = new Titular(new Cpf('123.456.789-12'), 'Sicrana Siqueira', $enderecobeltrano);
+
 
 echo $primeiraConta->recuperarSaldo() . PHP_EOL;
 echo $primeiraConta->recuperarCpfTitular() . PHP_EOL;
